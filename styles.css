@@ -1,0 +1,442 @@
+/* ============================================================================
+ *  styles.css — Estilos de la interfaz de SmartCompiler
+ *  Tema oscuro moderno con acentos en violeta/cian.
+ * ============================================================================ */
+
+/* ---------- Variables de diseño (colores, sombras, radios) ---------- */
+:root {
+  --fondo: #0d1117;            /* fondo general de la página */
+  --fondo-tarjeta: #161b22;    /* fondo de las tarjetas */
+  --fondo-input: #0d1117;      /* fondo de campos de texto */
+  --borde: #30363d;            /* bordes sutiles */
+  --texto: #e6edf3;            /* texto principal */
+  --texto-suave: #8b949e;      /* texto secundario */
+  --primario: #7c5cff;         /* violeta de marca */
+  --primario-hover: #9579ff;
+  --cian: #39c5cf;             /* acento cian */
+  --ok: #3fb950;               /* verde éxito */
+  --ok-fondo: rgba(63, 185, 80, 0.12);
+  --error: #f85149;            /* rojo error */
+  --error-fondo: rgba(248, 81, 73, 0.12);
+  --amarillo: #d29922;
+  --radio: 12px;
+  --sombra: 0 4px 24px rgba(0, 0, 0, 0.4);
+  --mono: "Cascadia Code", "Consolas", "Fira Code", monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--fondo);
+  color: var(--texto);
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+  /* Sutil resplandor de fondo para dar profundidad */
+  background-image:
+    radial-gradient(ellipse 60% 40% at 20% -10%, rgba(124, 92, 255, 0.15), transparent),
+    radial-gradient(ellipse 50% 30% at 90% 0%, rgba(57, 197, 207, 0.1), transparent);
+}
+
+code { font-family: var(--mono); }
+
+/* ============================ CABECERA ============================ */
+.cabecera {
+  border-bottom: 1px solid var(--borde);
+  padding: 22px 28px;
+  background: rgba(22, 27, 34, 0.6);
+  backdrop-filter: blur(8px);
+}
+
+.cabecera-contenido {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+.logo {
+  font-size: 2.2rem;
+  background: linear-gradient(135deg, var(--primario), var(--cian));
+  width: 56px; height: 56px;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 20px rgba(124, 92, 255, 0.35);
+}
+
+.cabecera h1 {
+  font-size: 1.6rem;
+  background: linear-gradient(90deg, var(--primario-hover), var(--cian));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitulo { color: var(--texto-suave); font-size: 0.88rem; }
+
+/* ============================ LAYOUT ============================ */
+.contenedor {
+  display: grid;
+  grid-template-columns: 330px 1fr 300px;
+  gap: 18px;
+  max-width: 1500px;
+  margin: 22px auto;
+  padding: 0 28px;
+  align-items: start;
+}
+
+.columna-izquierda, .columna-central, .columna-derecha {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* Diseño adaptable: en pantallas medianas y pequeñas se apilan las columnas */
+@media (max-width: 1200px) {
+  .contenedor { grid-template-columns: 1fr 1fr; }
+  .columna-central { grid-column: 1 / -1; order: -1; }
+}
+@media (max-width: 760px) {
+  .contenedor { grid-template-columns: 1fr; }
+}
+
+/* ============================ TARJETAS ============================ */
+.tarjeta {
+  background: var(--fondo-tarjeta);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  padding: 18px;
+  box-shadow: var(--sombra);
+}
+
+.tarjeta-encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.tarjeta-titulo { font-size: 1rem; margin-bottom: 10px; }
+.tarjeta-encabezado .tarjeta-titulo { margin-bottom: 0; }
+.tarjeta-ayuda { color: var(--texto-suave); font-size: 0.82rem; margin-bottom: 12px; }
+
+/* ============================ EDITOR ============================ */
+.editor {
+  width: 100%;
+  background: var(--fondo-input);
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  color: var(--texto);
+  font-family: var(--mono);
+  font-size: 1.15rem;
+  padding: 13px 14px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.editor:focus {
+  border-color: var(--primario);
+  box-shadow: 0 0 0 3px rgba(124, 92, 255, 0.25);
+}
+
+.fila-editor {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  font-size: 0.82rem;
+  color: var(--texto-suave);
+}
+
+.config-longitud { display: flex; align-items: center; gap: 6px; }
+
+.config-longitud input {
+  width: 64px;
+  background: var(--fondo-input);
+  border: 1px solid var(--borde);
+  border-radius: 6px;
+  color: var(--texto);
+  padding: 4px 6px;
+  font-family: var(--mono);
+}
+
+/* El contador se pinta rojo cuando se excede el límite (Mejora 3) */
+.contador.excedido { color: var(--error); font-weight: 700; }
+
+.fila-botones { display: flex; gap: 10px; margin-top: 14px; }
+
+/* ============================ BOTONES ============================ */
+.btn {
+  border: none;
+  border-radius: 8px;
+  padding: 11px 18px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.12s, box-shadow 0.2s, background 0.2s;
+}
+
+.btn:active { transform: scale(0.97); }
+
+.btn-primario {
+  flex: 1;
+  background: linear-gradient(135deg, var(--primario), #5a3fe0);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(124, 92, 255, 0.35);
+}
+.btn-primario:hover { background: linear-gradient(135deg, var(--primario-hover), var(--primario)); }
+
+.btn-secundario {
+  background: transparent;
+  border: 1px solid var(--borde);
+  color: var(--texto-suave);
+}
+.btn-secundario:hover { border-color: var(--texto-suave); color: var(--texto); }
+
+.btn-mini {
+  background: transparent;
+  border: 1px solid var(--borde);
+  border-radius: 6px;
+  color: var(--texto-suave);
+  cursor: pointer;
+  padding: 3px 8px;
+  font-size: 0.85rem;
+}
+.btn-mini:hover { border-color: var(--error); color: var(--error); }
+
+/* ============================ EJEMPLOS ============================ */
+.subtitulo-ejemplos { font-size: 0.8rem; margin: 12px 0 8px; }
+.subtitulo-ejemplos.ok { color: var(--ok); }
+.subtitulo-ejemplos.error { color: var(--error); }
+
+.grilla-ejemplos { display: flex; flex-direction: column; gap: 6px; }
+
+.ejemplo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--fondo-input);
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  text-align: left;
+  color: var(--texto);
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.ejemplo code { font-size: 0.92rem; min-width: 90px; }
+.ejemplo span { color: var(--texto-suave); font-size: 0.78rem; }
+
+.ejemplo-ok code { color: var(--ok); }
+.ejemplo-error code { color: var(--error); }
+
+.ejemplo:hover { border-color: var(--primario); background: rgba(124, 92, 255, 0.07); }
+
+/* ============================ PANEL DE SALIDA ============================ */
+.tarjeta-salida { min-height: 420px; }
+
+.placeholder {
+  color: var(--texto-suave);
+  text-align: center;
+  padding: 80px 20px;
+  font-size: 0.95rem;
+}
+
+/* ----- Línea de fases del compilador ----- */
+.fases {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+  font-size: 0.78rem;
+}
+
+.fase {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border-radius: 999px;
+  padding: 5px 12px;
+  border: 1px solid var(--borde);
+  white-space: nowrap;
+}
+
+.fase-icono { font-weight: 700; }
+.fase-ok { color: var(--ok); border-color: rgba(63, 185, 80, 0.4); background: var(--ok-fondo); }
+.fase-fallo { color: var(--error); border-color: rgba(248, 81, 73, 0.5); background: var(--error-fondo); }
+.fase-pendiente { color: var(--texto-suave); opacity: 0.6; }
+.fase-flecha { color: var(--texto-suave); }
+
+/* ----- Resultado exitoso ----- */
+.resultado-ok {
+  background: var(--ok-fondo);
+  border: 1px solid rgba(63, 185, 80, 0.4);
+  border-radius: var(--radio);
+  padding: 18px;
+  margin-bottom: 14px;
+}
+
+.resultado-ok .resultado-titulo { color: var(--ok); font-weight: 700; font-size: 0.85rem; letter-spacing: 1px; }
+
+.resultado-valor {
+  font-size: 2rem;
+  font-family: var(--mono);
+  margin: 8px 0 4px;
+}
+
+.resultado-var { color: var(--cian); }
+.resultado-postfijo { color: var(--texto-suave); font-size: 0.88rem; }
+.resultado-postfijo code { color: var(--cian); }
+
+/* ----- Resultado con error (formato amigable del enunciado) ----- */
+.resultado-error {
+  background: var(--error-fondo);
+  border: 1px solid rgba(248, 81, 73, 0.45);
+  border-radius: var(--radio);
+  padding: 18px;
+  margin-bottom: 14px;
+}
+
+.resultado-error .resultado-titulo { color: var(--error); font-weight: 700; font-size: 0.85rem; letter-spacing: 1px; margin-bottom: 8px; }
+
+.error-linea { margin: 4px 0; font-size: 0.93rem; }
+.error-etiqueta { color: var(--texto-suave); font-weight: 600; }
+
+/* Expresión con puntero ^ señalando la posición exacta del error */
+.puntero-error {
+  background: var(--fondo-input);
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-top: 12px;
+  font-family: var(--mono);
+  font-size: 1.05rem;
+  overflow-x: auto;
+  line-height: 1.5;
+}
+
+.caret { color: var(--error); font-weight: 700; animation: parpadeo 1s infinite; }
+
+@keyframes parpadeo { 50% { opacity: 0.35; } }
+
+/* ----- Secciones plegables (tokens, AST, estadísticas) ----- */
+.seccion {
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.seccion summary {
+  cursor: pointer;
+  padding: 11px 14px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.02);
+  user-select: none;
+}
+
+.seccion summary:hover { background: rgba(124, 92, 255, 0.07); }
+.seccion-cuerpo { padding: 12px 14px; }
+
+/* ----- Tabla de tokens ----- */
+.tabla { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+.tabla th {
+  text-align: left;
+  color: var(--texto-suave);
+  font-weight: 600;
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--borde);
+}
+.tabla td { padding: 6px 10px; border-bottom: 1px solid rgba(48, 54, 61, 0.5); }
+
+/* Insignias de color por tipo de token */
+.badge {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--borde);
+}
+.badge-NUMERO { color: var(--cian); border-color: rgba(57, 197, 207, 0.4); }
+.badge-IDENTIFICADOR { color: var(--amarillo); border-color: rgba(210, 153, 34, 0.4); }
+.badge-OPERADOR { color: var(--primario-hover); border-color: rgba(124, 92, 255, 0.4); }
+.badge-PAREN_IZQ, .badge-PAREN_DER { color: var(--ok); border-color: rgba(63, 185, 80, 0.4); }
+.badge-ASIGNACION { color: var(--error); border-color: rgba(248, 81, 73, 0.4); }
+
+/* ----- Dibujo del AST ----- */
+.ast {
+  font-family: var(--mono);
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--cian);
+  overflow-x: auto;
+}
+
+/* ----- Estadísticas (Mejora 8) ----- */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(95px, 1fr));
+  gap: 10px;
+}
+
+.stat {
+  background: var(--fondo-input);
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
+}
+
+.stat-num {
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-family: var(--mono);
+  background: linear-gradient(90deg, var(--primario-hover), var(--cian));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.stat-label { color: var(--texto-suave); font-size: 0.74rem; margin-top: 2px; }
+
+/* ============================ HISTORIAL Y VARIABLES ============================ */
+.lista-historial, .lista-variables {
+  list-style: none;
+  max-height: 220px;
+  overflow-y: auto;
+  font-size: 0.88rem;
+}
+
+.lista-historial li, .lista-variables li {
+  padding: 7px 4px;
+  border-bottom: 1px solid rgba(48, 54, 61, 0.5);
+}
+
+.lista-historial li:last-child, .lista-variables li:last-child { border-bottom: none; }
+
+.hist-num { color: var(--texto-suave); margin-right: 4px; }
+.var-nombre { color: var(--amarillo); }
+.vacio { color: var(--texto-suave); font-style: italic; border: none !important; }
+
+/* ============================ TARJETA INFO ============================ */
+.lista-info { list-style: none; font-size: 0.85rem; }
+.lista-info li { padding: 5px 0; color: var(--texto-suave); }
+.lista-info code { color: var(--cian); }
+
+/* ============================ PIE DE PÁGINA ============================ */
+.pie {
+  text-align: center;
+  color: var(--texto-suave);
+  font-size: 0.8rem;
+  padding: 24px;
+  border-top: 1px solid var(--borde);
+  margin-top: 24px;
+}
+
+/* ============================ BARRAS DE DESPLAZAMIENTO ============================ */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: var(--borde); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--texto-suave); }

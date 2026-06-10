@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SmartCompiler — Mini Compilador Inteligente | DataLogic Systems</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ====================== ENCABEZADO ====================== -->
+  <header class="cabecera">
+    <div class="cabecera-contenido">
+      <div class="logo">⚙️</div>
+      <div>
+        <h1>SmartCompiler</h1>
+        <p class="subtitulo">Mini Compilador Inteligente · SmartCalc Engine · DataLogic Systems</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- ====================== CONTENIDO PRINCIPAL ====================== -->
+  <main class="contenedor">
+
+    <!-- ========== COLUMNA IZQUIERDA: entrada + ejemplos ========== -->
+    <section class="columna-izquierda">
+
+      <!-- Tarjeta del editor de expresiones -->
+      <div class="tarjeta">
+        <h2 class="tarjeta-titulo">📝 Expresión a compilar</h2>
+
+        <input
+          type="text"
+          id="expresion"
+          class="editor"
+          placeholder="Ejemplo:  (3+4)*2   o   x=120+35"
+          autocomplete="off"
+          spellcheck="false"
+        />
+
+        <div class="fila-editor">
+          <!-- Mejora 3: el usuario configura la longitud máxima permitida -->
+          <label class="config-longitud">
+            Longitud máxima:
+            <input type="number" id="longitudMax" value="30" min="1" max="500" />
+          </label>
+          <span id="contadorCaracteres" class="contador">0 / 30 caracteres</span>
+        </div>
+
+        <div class="fila-botones">
+          <button id="btnCompilar" class="btn btn-primario">▶ Compilar</button>
+          <button id="btnLimpiar" class="btn btn-secundario">✕ Limpiar</button>
+        </div>
+      </div>
+
+      <!-- Tarjeta de ejemplos de un clic -->
+      <div class="tarjeta">
+        <h2 class="tarjeta-titulo">⚡ Ejemplos rápidos</h2>
+        <p class="tarjeta-ayuda">Haga clic en cualquier ejemplo para compilarlo al instante.</p>
+
+        <h3 class="subtitulo-ejemplos ok">✓ Expresiones válidas</h3>
+        <div id="ejemplosValidos" class="grilla-ejemplos"></div>
+
+        <h3 class="subtitulo-ejemplos error">✗ Expresiones con error</h3>
+        <div id="ejemplosInvalidos" class="grilla-ejemplos"></div>
+      </div>
+    </section>
+
+    <!-- ========== COLUMNA CENTRAL: salida del compilador ========== -->
+    <section class="columna-central">
+      <div class="tarjeta tarjeta-salida">
+        <h2 class="tarjeta-titulo">🖥️ Salida del compilador</h2>
+        <div id="panelSalida" class="panel-salida">
+          <div class="placeholder">
+            Escriba una expresión y presione <strong>Compilar</strong>, o seleccione un ejemplo.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== COLUMNA DERECHA: historial + variables ========== -->
+    <section class="columna-derecha">
+
+      <!-- Mejora 6: historial de operaciones -->
+      <div class="tarjeta">
+        <div class="tarjeta-encabezado">
+          <h2 class="tarjeta-titulo">🕑 Historial</h2>
+          <button id="btnBorrarHistorial" class="btn-mini" title="Borrar historial">🗑</button>
+        </div>
+        <ul id="listaHistorial" class="lista-historial"></ul>
+      </div>
+
+      <!-- Mejora 5: tabla de variables definidas -->
+      <div class="tarjeta">
+        <div class="tarjeta-encabezado">
+          <h2 class="tarjeta-titulo">🔣 Variables</h2>
+          <button id="btnBorrarVariables" class="btn-mini" title="Borrar variables">🗑</button>
+        </div>
+        <ul id="listaVariables" class="lista-variables"></ul>
+      </div>
+
+      <!-- Recordatorio de símbolos permitidos -->
+      <div class="tarjeta tarjeta-info">
+        <h2 class="tarjeta-titulo">ℹ️ Lenguaje permitido</h2>
+        <ul class="lista-info">
+          <li>Números: <code>0-9</code> (varios dígitos y decimales)</li>
+          <li>Operadores: <code>+ &nbsp;- &nbsp;* &nbsp;/</code></li>
+          <li>Paréntesis: <code>( )</code></li>
+          <li>Variables: <code>x = 5+2</code></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="pie">
+    Proyecto Integrador Final — Teoría de Lenguajes · Fases: Validación → Léxico → Sintáctico → Semántico → Evaluación
+  </footer>
+
+  <!-- Primero el compilador, luego la lógica de interfaz que lo usa -->
+  <script src="compiler.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
