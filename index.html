@@ -11,10 +11,10 @@
   <!-- ====================== ENCABEZADO ====================== -->
   <header class="cabecera">
     <div class="cabecera-contenido">
-      <div class="logo">⚙️</div>
+      <div class="logo"><i data-lucide="cpu"></i></div>
       <div>
         <h1>SmartCompiler</h1>
-        <p class="subtitulo">Mini Compilador Inteligente · SmartCalc Engine · DataLogic Systems</p>
+        <p class="subtitulo">DataLogic Systems</p>
       </div>
     </div>
   </header>
@@ -27,7 +27,7 @@
 
       <!-- Tarjeta del editor de expresiones -->
       <div class="tarjeta">
-        <h2 class="tarjeta-titulo">📝 Expresión a compilar</h2>
+        <h2 class="tarjeta-titulo"><i data-lucide="terminal"></i> Expresión a compilar</h2>
 
         <input
           type="text"
@@ -48,20 +48,20 @@
         </div>
 
         <div class="fila-botones">
-          <button id="btnCompilar" class="btn btn-primario">▶ Compilar</button>
-          <button id="btnLimpiar" class="btn btn-secundario">✕ Limpiar</button>
+          <button id="btnCompilar" class="btn btn-primario"><i data-lucide="play"></i> Compilar</button>
+          <button id="btnLimpiar" class="btn btn-secundario"><i data-lucide="eraser"></i> Limpiar</button>
         </div>
       </div>
 
       <!-- Tarjeta de ejemplos de un clic -->
       <div class="tarjeta">
-        <h2 class="tarjeta-titulo">⚡ Ejemplos rápidos</h2>
+        <h2 class="tarjeta-titulo"><i data-lucide="zap"></i> Ejemplos rápidos</h2>
         <p class="tarjeta-ayuda">Haga clic en cualquier ejemplo para compilarlo al instante.</p>
 
-        <h3 class="subtitulo-ejemplos ok">✓ Expresiones válidas</h3>
+        <h3 class="subtitulo-ejemplos ok"><i data-lucide="check-circle"></i> Expresiones válidas</h3>
         <div id="ejemplosValidos" class="grilla-ejemplos"></div>
 
-        <h3 class="subtitulo-ejemplos error">✗ Expresiones con error</h3>
+        <h3 class="subtitulo-ejemplos error"><i data-lucide="x-circle"></i> Expresiones con error</h3>
         <div id="ejemplosInvalidos" class="grilla-ejemplos"></div>
       </div>
     </section>
@@ -69,7 +69,7 @@
     <!-- ========== COLUMNA CENTRAL: salida del compilador ========== -->
     <section class="columna-central">
       <div class="tarjeta tarjeta-salida">
-        <h2 class="tarjeta-titulo">🖥️ Salida del compilador</h2>
+        <h2 class="tarjeta-titulo"><i data-lucide="monitor"></i> Salida del compilador</h2>
         <div id="panelSalida" class="panel-salida">
           <div class="placeholder">
             Escriba una expresión y presione <strong>Compilar</strong>, o seleccione un ejemplo.
@@ -84,8 +84,8 @@
       <!-- Mejora 6: historial de operaciones -->
       <div class="tarjeta">
         <div class="tarjeta-encabezado">
-          <h2 class="tarjeta-titulo">🕑 Historial</h2>
-          <button id="btnBorrarHistorial" class="btn-mini" title="Borrar historial">🗑</button>
+          <h2 class="tarjeta-titulo"><i data-lucide="history"></i> Historial</h2>
+          <button id="btnBorrarHistorial" class="btn-mini" title="Borrar historial"><i data-lucide="trash-2"></i></button>
         </div>
         <ul id="listaHistorial" class="lista-historial"></ul>
       </div>
@@ -93,15 +93,15 @@
       <!-- Mejora 5: tabla de variables definidas -->
       <div class="tarjeta">
         <div class="tarjeta-encabezado">
-          <h2 class="tarjeta-titulo">🔣 Variables</h2>
-          <button id="btnBorrarVariables" class="btn-mini" title="Borrar variables">🗑</button>
+          <h2 class="tarjeta-titulo"><i data-lucide="variable"></i> Variables</h2>
+          <button id="btnBorrarVariables" class="btn-mini" title="Borrar variables"><i data-lucide="trash-2"></i></button>
         </div>
         <ul id="listaVariables" class="lista-variables"></ul>
       </div>
 
       <!-- Recordatorio de símbolos permitidos -->
       <div class="tarjeta tarjeta-info">
-        <h2 class="tarjeta-titulo">ℹ️ Lenguaje permitido</h2>
+        <h2 class="tarjeta-titulo"><i data-lucide="info"></i> Lenguaje permitido</h2>
         <ul class="lista-info">
           <li>Números: <code>0-9</code> (varios dígitos y decimales)</li>
           <li>Operadores: <code>+ &nbsp;- &nbsp;* &nbsp;/</code></li>
@@ -113,9 +113,11 @@
   </main>
 
   <footer class="pie">
-    Proyecto Integrador Final — Teoría de Lenguajes · Fases: Validación → Léxico → Sintáctico → Semántico → Evaluación
+    Proyecto Integrador Final - Teoría de Lenguajes
   </footer>
 
+  <!-- Lucide: librería de iconos (copia local, funciona sin internet) -->
+  <script src="lucide.min.js"></script>
   <!-- Primero el compilador, luego la lógica de interfaz que lo usa -->
   <script src="compiler.js"></script>
   <script src="app.js"></script>

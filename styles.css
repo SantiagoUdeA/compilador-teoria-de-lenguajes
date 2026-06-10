@@ -26,6 +26,11 @@
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
+/* ---------- Iconos Lucide (SVG) ---------- */
+/* Lucide reemplaza <i data-lucide="..."> por un <svg class="lucide">.
+   Aquí se controla su tamaño y alineación en cada contexto. */
+.lucide { width: 1em; height: 1em; vertical-align: -0.125em; flex-shrink: 0; }
+
 body {
   background: var(--fondo);
   color: var(--texto);
@@ -56,13 +61,14 @@ code { font-family: var(--mono); }
 }
 
 .logo {
-  font-size: 2.2rem;
   background: linear-gradient(135deg, var(--primario), var(--cian));
   width: 56px; height: 56px;
   border-radius: 14px;
   display: flex; align-items: center; justify-content: center;
   box-shadow: 0 4px 20px rgba(124, 92, 255, 0.35);
 }
+
+.logo .lucide { width: 30px; height: 30px; color: #fff; }
 
 .cabecera h1 {
   font-size: 1.6rem;
@@ -116,7 +122,16 @@ code { font-family: var(--mono); }
   margin-bottom: 8px;
 }
 
-.tarjeta-titulo { font-size: 1rem; margin-bottom: 10px; }
+.tarjeta-titulo {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Iconos de los títulos de tarjeta en color de marca */
+.tarjeta-titulo .lucide { width: 17px; height: 17px; color: var(--primario-hover); }
 .tarjeta-encabezado .tarjeta-titulo { margin-bottom: 0; }
 .tarjeta-ayuda { color: var(--texto-suave); font-size: 0.82rem; margin-bottom: 12px; }
 
@@ -174,7 +189,13 @@ code { font-family: var(--mono); }
   font-weight: 600;
   cursor: pointer;
   transition: transform 0.12s, box-shadow 0.2s, background 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
 }
+
+.btn .lucide { width: 15px; height: 15px; }
 
 .btn:active { transform: scale(0.97); }
 
@@ -199,13 +220,24 @@ code { font-family: var(--mono); }
   border-radius: 6px;
   color: var(--texto-suave);
   cursor: pointer;
-  padding: 3px 8px;
-  font-size: 0.85rem;
+  padding: 4px 8px;
+  display: inline-flex;
+  align-items: center;
 }
+
+.btn-mini .lucide { width: 14px; height: 14px; }
 .btn-mini:hover { border-color: var(--error); color: var(--error); }
 
 /* ============================ EJEMPLOS ============================ */
-.subtitulo-ejemplos { font-size: 0.8rem; margin: 12px 0 8px; }
+.subtitulo-ejemplos {
+  font-size: 0.8rem;
+  margin: 12px 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.subtitulo-ejemplos .lucide { width: 14px; height: 14px; }
 .subtitulo-ejemplos.ok { color: var(--ok); }
 .subtitulo-ejemplos.error { color: var(--error); }
 
@@ -263,7 +295,7 @@ code { font-family: var(--mono); }
   white-space: nowrap;
 }
 
-.fase-icono { font-weight: 700; }
+.fase-icono { width: 12px; height: 12px; stroke-width: 3; }
 .fase-ok { color: var(--ok); border-color: rgba(63, 185, 80, 0.4); background: var(--ok-fondo); }
 .fase-fallo { color: var(--error); border-color: rgba(248, 81, 73, 0.5); background: var(--error-fondo); }
 .fase-pendiente { color: var(--texto-suave); opacity: 0.6; }
@@ -278,7 +310,8 @@ code { font-family: var(--mono); }
   margin-bottom: 14px;
 }
 
-.resultado-ok .resultado-titulo { color: var(--ok); font-weight: 700; font-size: 0.85rem; letter-spacing: 1px; }
+.resultado-ok .resultado-titulo { color: var(--ok); font-weight: 700; font-size: 0.85rem; letter-spacing: 1px; display: flex; align-items: center; gap: 6px; }
+.resultado-ok .resultado-titulo .lucide { width: 16px; height: 16px; }
 
 .resultado-valor {
   font-size: 2rem;
@@ -299,7 +332,8 @@ code { font-family: var(--mono); }
   margin-bottom: 14px;
 }
 
-.resultado-error .resultado-titulo { color: var(--error); font-weight: 700; font-size: 0.85rem; letter-spacing: 1px; margin-bottom: 8px; }
+.resultado-error .resultado-titulo { color: var(--error); font-weight: 700; font-size: 0.85rem; letter-spacing: 1px; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+.resultado-error .resultado-titulo .lucide { width: 16px; height: 16px; }
 
 .error-linea { margin: 4px 0; font-size: 0.93rem; }
 .error-etiqueta { color: var(--texto-suave); font-weight: 600; }
@@ -336,6 +370,14 @@ code { font-family: var(--mono); }
   font-weight: 600;
   background: rgba(255, 255, 255, 0.02);
   user-select: none;
+}
+
+/* Iconos dentro de los títulos de sección plegable */
+.seccion summary .lucide {
+  width: 15px; height: 15px;
+  color: var(--cian);
+  vertical-align: -2px;
+  margin-right: 4px;
 }
 
 .seccion summary:hover { background: rgba(124, 92, 255, 0.07); }

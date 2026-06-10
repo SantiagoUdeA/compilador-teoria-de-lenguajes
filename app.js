@@ -128,8 +128,9 @@ function htmlFases(faseFallida) {
     if (i < indiceFallo) estado = "ok";        // fase superada
     else if (i === indiceFallo) estado = "fallo"; // fase que detectó el error
     else estado = "pendiente";                  // no se llegó a ejecutar
-    const icono = estado === "ok" ? "✓" : estado === "fallo" ? "✗" : "•";
-    html += `<div class="fase fase-${estado}"><span class="fase-icono">${icono}</span>${fase.nombre}</div>`;
+    // Icono de Lucide según el estado de la fase
+    const icono = estado === "ok" ? "check" : estado === "fallo" ? "x" : "minus";
+    html += `<div class="fase fase-${estado}"><i data-lucide="${icono}" class="fase-icono"></i>${fase.nombre}</div>`;
     if (i < FASES.length - 1) html += '<div class="fase-flecha">→</div>';
   });
   html += "</div>";
@@ -208,7 +209,7 @@ function mostrarResultado(res) {
     // ---------- COMPILACIÓN EXITOSA ----------
     const esAsignacion = res.ast.tipo === "asignacion";
     html += `<div class="resultado-ok">
-      <div class="resultado-titulo">✓ EXPRESIÓN VÁLIDA</div>
+      <div class="resultado-titulo"><i data-lucide="check-circle"></i> EXPRESIÓN VÁLIDA</div>
       <div class="resultado-valor">
         ${esAsignacion ? `<span class="resultado-var">${escaparHTML(res.ast.nombre)} =</span> ` : "Resultado: "}
         <strong>${formatearNumero(res.resultado)}</strong>
@@ -219,7 +220,7 @@ function mostrarResultado(res) {
     // ---------- ERROR: formato amigable exigido por la empresa ----------
     const e = res.error;
     html += `<div class="resultado-error">
-      <div class="resultado-titulo">✗ ERROR ${e.tipo}</div>
+      <div class="resultado-titulo"><i data-lucide="x-circle"></i> ERROR ${e.tipo}</div>
       ${e.posicion !== null ? `<div class="error-linea"><span class="error-etiqueta">Posición:</span> ${e.posicion}</div>` : ""}
       <div class="error-linea"><span class="error-etiqueta">Detalle:</span> ${escaparHTML(e.detalle)}</div>
       <div class="error-linea"><span class="error-etiqueta">Sugerencia:</span> ${escaparHTML(e.sugerencia)}</div>
@@ -230,21 +231,28 @@ function mostrarResultado(res) {
   // Secciones detalladas: solo se muestran las fases que sí se completaron
   if (res.tokens) {
     html += htmlSeccion(
-      `🔤 Tokens (Análisis Léxico) — ${res.tokens.length - 1} tokens`,
+      `<i data-lucide="list"></i> Tokens (Análisis Léxico) — ${res.tokens.length - 1} tokens`,
       htmlTablaTokens(res.tokens)
     );
   }
   if (res.arbolTexto) {
     html += htmlSeccion(
-      "🌳 Árbol de Sintaxis (AST)",
+      '<i data-lucide="network"></i> Árbol de Sintaxis (AST)',
       `<pre class="ast">${escaparHTML(res.arbolTexto)}</pre>`
     );
   }
   if (res.estadisticas) {
-    html += htmlSeccion("📊 Estadísticas (Mejora 8)", htmlEstadisticas(res.estadisticas), true);
+    html += htmlSeccion(
+      '<i data-lucide="bar-chart-3"></i> Estadísticas (Mejora 8)',
+      htmlEstadisticas(res.estadisticas),
+      true
+    );
   }
 
   panelSalida.innerHTML = html;
+  // Lucide reemplaza las etiquetas <i data-lucide> por sus SVG.
+  // Debe llamarse cada vez que se inserta HTML nuevo con iconos.
+  lucide.createIcons();
 }
 
 /* ----------------------------------------------------------------------------
@@ -356,4 +364,6 @@ renderizarEjemplos();
 renderizarHistorial();
 renderizarVariables();
 actualizarContador();
+// Convierte todos los <i data-lucide> estáticos del HTML en iconos SVG
+lucide.createIcons();
 inputExpresion.focus();
